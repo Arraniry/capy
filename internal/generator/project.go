@@ -86,6 +86,11 @@ func (g *ProjectGenerator) Generate() error {
 		return fmt.Errorf("gagal generate README.md: %w", err)
 	}
 
+	// Generate Dockerfile
+	if err := g.generateDockerfile(); err != nil {
+		return fmt.Errorf("gagal generate Dockerfile: %w", err)
+	}
+
 	return nil
 }
 
@@ -496,4 +501,42 @@ require (
 )
 `, g.projectName)
 	return os.WriteFile(filepath.Join(g.basePath, "go.mod"), []byte(content), 0644)
+}
+
+func (g *ProjectGenerator) generateDockerfile() error {
+	dockerfileContent := `# Gunakan image Go resmi sebagai base image
+FROM golang:1.21 AS builder
+
+# Set working directory
+WORKDIR /app
+
+# Salin go.mod dan go.sum
+COPY go.mod go.sum ./
+
+# Download dependencies
+RUN go mod download
+
+# Salin semua file ke dalam container
+COPY . .
+
+# Build aplikasi
+RUN go build -o main ./cmd/main.go
+
+# Gunakan image yang lebih kecil untuk menjalankan aplikasi
+FROM alpine:latest
+
+# Set working directory
+WORKDIR /root/
+
+# Salin binary dari builder
+COPY --from=builder /app/main .
+
+# Expose port yang digunakan aplikasi
+EXPOSE 8080
+
+# Jalankan aplikasi
+CMD ["./main"]
+`
+
+	return os.WriteFile(filepath.Join(g.basePath, "Dockerfile"), []byte(dockerfileContent), 0644)
 }

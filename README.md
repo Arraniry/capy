@@ -13,7 +13,7 @@ Capy adalah sebuah CLI tool yang membantu Anda membuat proyek Go dengan struktur
 Untuk menginstal Capy, pastikan Anda telah menginstal Go di sistem Anda. Kemudian, jalankan perintah berikut:
 
 ```bash
-go install github.com/arraniry/capy@latest
+go install github.com/arraniry/capy/cmd/capy@latest
 ```
 
 ## Penggunaan

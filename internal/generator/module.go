@@ -293,8 +293,7 @@ func (u *{{.Name}}Usecase) Delete(id uint) error {
 }
 
 func (g *ModuleGenerator) generateFile(dir, filename, tmpl string) error {
-	// fullDir := filepath.Join(g.projectPath, dir)
-	fullDir := filepath.Join(dir)
+	fullDir := filepath.Join(g.projectPath, dir)
 	if err := os.MkdirAll(fullDir, 0755); err != nil {
 		return fmt.Errorf("gagal membuat direktori %s: %w", fullDir, err)
 	}

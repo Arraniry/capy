@@ -3,7 +3,6 @@ package main
 import (
 	"fmt"
 	"os"
-	"path/filepath"
 
 	"github.com/arraniry/capy/internal/generator"
 	"github.com/spf13/cobra"
@@ -73,16 +72,16 @@ var moduleCmd = &cobra.Command{
 		moduleName := args[0]
 		fmt.Printf("Membuat modul baru: %s\n", moduleName)
 
-		wd, err := os.Getwd()
-		if err != nil {
-			fmt.Printf("Error: %v\n", err)
-			os.Exit(1)
-		}
+		// wd, err := os.Getwd()
+		// if err != nil {
+		// 	fmt.Printf("Error: %v\n", err)
+		// 	os.Exit(1)
+		// }
 
-		projectName := filepath.Base(wd)
+		// projectName := filepath.Base(wd)
 
 		moduleGen := generator.NewModuleGenerator(moduleName)
-		moduleGen.SetProjectPath(projectName)
+		// moduleGen.SetProjectPath(projectName)
 
 		if err := moduleGen.Generate(); err != nil {
 			fmt.Printf("Error: %v\n", err)

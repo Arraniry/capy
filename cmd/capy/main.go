@@ -1,4 +1,4 @@
-package capy
+package main
 
 import (
 	"fmt"
